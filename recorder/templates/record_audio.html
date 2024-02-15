@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice Recorder</title>
+    <style>
+        body{
+            margin: 200px auto;
+            text-align: center;
+            font-family: cursive;
+        }
+        button{
+            background-color: rgb(80, 80, 231);
+            color: white;
+            height: 45px;
+            width: 100px;
+            border: none;
+            border-radius: 16px;
+            font-family: cursive
+        }
+        h5{
+            color:red;
+        }
+    </style>
+</head>
+<body>
+    <h1>Voice Recorder</h1>
+    <h5>{{message}}</h5>
+    <h5>{{transcription}}</h5>
+    <p>Click the button below to start recording:</p>
+    <form id="recordingForm" method="post" action="{% url 'recorder' %}">
+        {% csrf_token %}
+
+        <input type="hidden" name="action" id="action" value="">
+
+        <button onclick="startRecording()">Start Recording</button>
+        <button onclick="stopRecording()">Stop Recording</button>
+    </form>
+    
+<script>
+    function startRecording(){
+        console.log("startrecording called...")
+        document.getElementById("action").value = "start";
+        document.getElementById("recordingForm").action = "{% url 'recorder' %}?action=start";
+        document.getElementById("recordingForm").submit();
+    }
+    function stopRecording() {
+        document.getElementById("action").value = "stop";
+        document.getElementById("recordingForm").action = "{% url 'recorder' %}?action=stop";
+        document.getElementById("recordingForm").submit();
+    }
+</script>
+</body>
+</html>
